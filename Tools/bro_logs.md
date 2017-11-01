@@ -1,5 +1,9 @@
 # Bro Logs : a selection
 
+[Orginally from Corelight Cheatsheet](https://github.com/corelight/bro-cheatsheets)
+
+These were converted in to Markdown format to conform with how I'm building this repo.
+
 These cheat sheets document a subset of the most important logs from Bro release version 2.5. Tofilearn about enterprise solutions from the creators of Bro, visit corelight.com.
 
 ## Logs
@@ -78,7 +82,7 @@ These cheat sheets document a subset of the most important logs from Bro release
 ### dns.log
 | FIELD | TYPE | Description |
 | - | - | - |
-| ts | time | Timestamp of the DHCPfilease request |
+| ts | time | Timestamp of the DHCP lease request |
 | uid & id | | Underlying connection info > See conn.log |
 | proto | proto | Protocol of DNS transaction—TCP or UDP |
 | trans_id | count | 16 bit identi er assigned by DNS client; responses match |
@@ -284,20 +288,47 @@ These cheat sheets document a subset of the most important logs from Bro release
 ### ssl.log
 | FIELD | TYPE | Description |
 | - | - | - |
-| ts | time | Timestamp of the HTTP request |
+| ts | time | Timestamp when SSL connection detected |
 | uid & id |  | Underlying connection info > See conn.log |
+| version  | string  | SSL version that the server offered |
+| cipher | string | SSL cipher suite that the server chose |
+| curve | string  | Elliptic curve the server chose if using ECDH/ECDHE  |
+| server_name  | string  | Value of the Server Name Indicator SSL extension  |
+| session_id  | string  | Session ID offered by client for session resumption   |
+| resumed   | bool   | Flag that indicates the session was resumed  |
+| last_alert  | string  | Last alert that was seen during the connection  |
+| next_protocol  | string   | Next protocol server chose using application layer next protocol extension, if seen  |
+| established  | bool   | Was this connection established successfully?  |
+| cert_chain  | vector  | Chain of certi cates offered by server  |
+| cert_chain_fluids  | Vector  | File UIDs for certs in cert_chain  |
+| client_cert_chain  | vector  | Chain of certi cates offered by client  |
+| client_cert_chain_fluids  | Vector  | File UIDs for certs in client_cert_chain  |
+| subject  | string   |  Subject of the X.509 cert offered by servre  |
+| issuer  | string  | Subject of the signer of the cert  |
+| client_subject  | string   | Subject of the X.509 cert offered by client  |
+| client_issuer  | string  | Subject of the signer of the client cert  |
+| validation_status  | string  | Cerrtificate validation result for this handshake  |
+| ocsp_status  | string  | OCSP validation for this handshake |
+| ocsp_response  | string   | OCSP response as a string  |
+| notary  | Cert Notary::Response   | A response from the ICSI certificate notary  |
+
 
 ### syslog.log
 | FIELD | TYPE | Description |
 | - | - | - |
-| ts | time | Timestamp of the HTTP request |
+| ts | time | Timestamp syslog message was seen |
 | uid & id |  | Underlying connection info > See conn.log |
+| proto  | trans port_proto  | Protocol over which the message was seen  |
+| facility  | string  | Syslog facility for the message  |
+| severity  | string  | Syslog severity for the message  |
+| message  | string  | The plain text message  |
 
 ### tunnel.log
 | FIELD | TYPE | Description |
 | - | - | - |
-| ts | time | Timestamp of the HTTP request |
+| ts | time | Timestamp of tunnel detection |
 | uid & id |  | Underlying connection info > See conn.log |
+| tunnle_type  | string  | The type of tunnel (e.g., toredo, ip, etc)  |
 
 ### dec_rpc.log
 | FIELD | TYPE | Description |
