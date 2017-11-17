@@ -17,7 +17,7 @@ Mount a drive `mount /dev/sda<#> /mnt/<name>`
 
 ### Unusual SUID files
 
-`find / -uid 0 - perm -4000 - print`
+`find / -user root -perm -4000 -exec ls -ldb {} \`
 
 ### Unusual large files
 
@@ -26,7 +26,7 @@ Mount a drive `mount /dev/sda<#> /mnt/<name>`
 ### Hidden or Obfuscated
 
 ```
-find / -name " " - print
+find / -name " " -print
 find / -name ".. " -print
 find / -name ". " -print
 find / -name " " -print
